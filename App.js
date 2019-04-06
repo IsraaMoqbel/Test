@@ -1,11 +1,36 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View, Switch, Text, I18nManager, Alert} from 'react-native';
 import Home from './src/components/Home';
 
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state={
+      isRTL: false
+    }
+  }
+  _onDirectionChange = () => {
+    I18nManager.forceRTL(!this.state.isRTL);
+    this.setState({isRTL: !this.state.isRTL});
+    Alert.alert(
+      'Reload this page',
+      'Please reload this page to change the UI direction! '
+    );
+  };
   render() {
     return (
-      <Home />
+      <View style={styles.container}>
+      <Text >forceRTL</Text>
+      <View >
+        <Switch
+          onValueChange={this._onDirectionChange}
+          style={styles.rightAlignStyle}
+          value={this.state.isRTL}
+        />
+      </View>
+            <Home />
+    </View>
+
     );
   }
 }
